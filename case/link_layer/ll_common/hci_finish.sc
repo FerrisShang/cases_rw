@@ -1,0 +1,2 @@
+# script finished
+ERROR: SUCCESS

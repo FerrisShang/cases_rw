@@ -1,0 +1,20 @@
+# Slave config
+
+IMPORT: ll_common_cfg.sc
+
+DEFINE: LOC_ADDR_TYPE,           BYTE, 01
+DEFINE: LOC_ADDR,                BYTE, F5 F5 F5 F5 F5 F5
+DEFINE: LOC_IRK,                 BYTE, 000102030405060708090a0b0c0d0e0f
+						         
+DEFINE: REM_ADDR_TYPE,           BYTE, 01
+DEFINE: REM_ADDR,                BYTE, F0 F1 F2 F3 F4 F5
+						         
+DEFINE: LOC_CSRK,                BYTE, 0123456789abcdeffedcba9876543210
+DEFINE: LOC_CNT,                 BYTE, 00000000
+DEFINE: REM_CSRK,                BYTE, 0123456789abcdeffedcba9876543210
+DEFINE: REM_CNT,                 BYTE, 00000000
+DEFINE: LOC_AUTH,                BYTE, 05 000000
+DEFINE: CON_CFM_MISC,            BYTE, 00 00 0000 0000 0000 00000000
+
+DEFINE: EXT_ADV_FOR_CONN_HANDLE, BYTE, 01
+DEFINE: EXT_PER_ADV_HANDLE,      BYTE, 00

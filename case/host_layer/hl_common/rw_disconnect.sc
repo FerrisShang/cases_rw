@@ -1,0 +1,4 @@
+#Disconnect
+WARNING: Disconnecting to peer
+DEFINE: CON_HDL, BYTE, 0000
+SEND: 05 040E0E0010000200 01 13

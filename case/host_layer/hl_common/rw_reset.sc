@@ -1,0 +1,18 @@
+# Reset device
+
+# Reset device 1st
+SEND: 05020D0D0010000100 01
+
+# Wait for reset to reflush the receive buffer, remove junk message such as reports.
+DELAY: 50
+CUSTOM: FLUSH
+
+# Reset device 2nd
+SEND: 05020D0D0010000100 01
+RECV: 05000D10000D000200 0100
+
+# Set device config
+SEND: 05040d0d0010003400 030f8403 {LOC_ADDR} {LOC_IRK} {LOC_ADDR_TYPE} 01000000000000fb0090420301030100000000000000000000
+RECV: 05000D10000D000200 0300
+DELAY: 50
+WARNING: Reset device
