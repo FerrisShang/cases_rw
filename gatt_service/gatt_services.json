@@ -1,0 +1,148 @@
+{
+  "Notes": [
+    "GATT服务定义的主键是services，其内容为数组类型",
+    "每个service为object类型，内容包括type, uuid, name, comments, characteristics",
+    "    type为服务类型，直接用uuid表示，如0x2800为primary service",
+    "    uuid，服务的UUID，用16进制表示",
+    "    name，服务名称，名称同样用于转成代码时作为变量名，若有空格则转成下划线",
+    "    comments，注释。可以没有",
+    "    characteristics，服务中包含的char，类型为数组，内容的类型为object，内容包括uuid, name, properties, permission, read_ind, max_length, value, descriptors, comments",
+    "        uuid，char对应的UUID",
+    "        name，char的名字",
+    "        properties，char的ATT属性，用'/'分隔的字母表示，支持的属性有：B/R/W/C/N/I/S/E，C:write command, S:signed, E:extend",
+    "        permission，char的读写权限，类型为数组，内容的类型为object，内容包括read，write，若没有该字段则默认权限均为no_auth",
+    "            read，读权限，支持的类型有：no_auth(无虚配对), un_auth(简单配对), auth(MITM配对), sc(安全配对)",
+    "            write，写权限，支持的类型同上",
+    "        read_ind，client读取时是否通知应用层，若不声明则默认为True",
+    "        max_length，char的value对应的最大长度",
+    "        values，数组类型，具体项目类型为object，解释了value各字段的长度以及具体含义，内容包括name, bit_length, type, default, comments",
+    "            name，value名称",
+    "            bit_length，长度，单位为bit，value数组中的内容是按照高字节地址向低字节进行排列",
+    "            type，数据类型，支持的有(后续可以任意扩展)：unsigned, signed, hex, enum",
+    "            default，value默认值，为数值时直接写十进制数或以'0x'开头的十六进制，若为字节流则放在'{}'中（如：{11BB33}）若没有该字段则默认值为0",
+    "            comments，注释。可以没有",
+    "        descriptors，char对应的descriptor，数组类型，具体项目类型为object，为具体descriptor的解释，内容包括uuid, permission, comments",
+    "            uuid，desc对应的UUID",
+    "            permission，char的读写权限，类型为数组，内容的类型为object，内容包括read，write，若没有该字段则默认权限均为no_auth",
+    "                read，读权限，支持的类型有：no_auth(无虚配对), un_auth(简单配对), auth(MITM配对), sc(安全配对)",
+    "                write，写权限，支持的类型同上",
+    "            comments，注释。可以没有",
+    "        comments，注释。可以没有"
+
+  ],
+  "services": [
+    {
+      "type": "0x2800",
+      "uuid": "0x180D",
+      "name": "Heart Rate",
+      "comments": "",
+      "characteristics": [
+        {
+          "uuid": "0x2A37",
+          "name": "Measurement",
+          "properties": "N",
+          "permission": {
+            "read": "no_auth"
+          },
+          "max_length": 2,
+          "values": [
+            {
+              "name": "reserved",
+              "bit_length": 3
+            },
+            {
+              "name": "Interval_bit",
+              "bit_length": 1,
+              "type": "unsigned",
+              "default": "0",
+              "comments": "Whether or not RR-Interval values are present in the Heart Rate Measurement characteristic"
+            },
+            {
+              "name": "Energy Expended Status bit",
+              "bit_length": 1,
+              "type": "unsigned",
+              "default": "0",
+              "comments": "The value of the Energy Expended Status"
+            },
+            {
+              "name": "Sensor Contact Status bits",
+              "bit_length": 2,
+              "type": "unsigned",
+              "default": "0",
+              "comments": "高位表示是否支持Sensor Contact，低位表示Sensor Contact状态"
+            },
+            {
+              "name": "Heart Rate Value Format bit",
+              "bit_length": 1,
+              "type": "signed",
+              "default": "0",
+              "comments": "0：心率值用uint8表示，1：心率值用uint16表示"
+            },
+            {
+              "name": "Measurement Value",
+              "bit_length": 8,
+              "type": "unsigned",
+              "default": "70",
+              "comments": "心率值"
+            }
+          ],
+          "descriptors": [
+            {
+              "uuid": "0x2803",
+              "permission": {
+                "write": "no_auth"
+              }
+            }
+          ]
+        },
+        {
+          "uuid": "0x2A38",
+          "name": "Body Sensor Location",
+          "properties": "R",
+          "permission": {
+            "read": "no_auth"
+          },
+          "max_length": 1,
+          "values": [
+            {
+              "name": "Body Sensor Location",
+              "bit_length": 8,
+              "type": "enum",
+              "default": "2",
+              "enum": {
+                "Other": 0,
+                "Chest": 1,
+                "Wrist": 2,
+                "Finger": 3,
+                "Hand": 4,
+                "Ear_Lobe": 5,
+                "Foot": 6,
+              "comments": "Whether or not RR-Interval values are present in the Heart Rate Measurement characteristic"
+              }
+            }
+          ]
+        },
+        {
+          "uuid": "0x2A39",
+          "name": "Control Point",
+          "properties": "W",
+          "permission": {
+            "write": "no_auth"
+          },
+          "max_length": 8,
+          "values": [
+            {
+              "name": "Control Point",
+              "bit_length": 8,
+              "type": "enum",
+              "enum": {
+                "Reset_Energy_Expended": 1
+              },
+              "comments": "Resets the value of the Energy Expended field in the Heart Rate Measurement characteristic to 0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
