@@ -5,6 +5,7 @@
     "    type为服务类型，直接用uuid表示，如0x2800为primary service",
     "    uuid，服务的UUID，用16进制表示",
     "    name，服务名称，名称同样用于转成代码时作为变量名，若有空格则转成下划线",
+    "    short_name，服务短名称，转成代码时优先用这个作为变量名，若有空格则转成下划线，可以没有",
     "    comments，注释。可以没有",
     "    characteristics，服务中包含的char，类型为数组，内容的类型为object，内容包括uuid, name, properties, permission, read_ind, max_length, value, descriptors, comments",
     "        uuid，char对应的UUID",
@@ -35,6 +36,7 @@
       "type": "0x2800",
       "uuid": "0x180D",
       "name": "Heart Rate",
+      "short_name": "HRS",
       "comments": "",
       "characteristics": [
         {
@@ -88,7 +90,8 @@
           ],
           "descriptors": [
             {
-              "uuid": "0x2803",
+              "uuid": "0x2902",
+              "properties": "R/W",
               "permission": {
                 "write": "no_auth"
               }
